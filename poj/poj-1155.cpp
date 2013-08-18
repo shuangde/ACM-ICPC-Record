@@ -1,12 +1,20 @@
+<<<<<<< HEAD
+/**==========================================
+=======
 /**=====================================================
+>>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
  *   This is a solution for ACM/ICPC problem
  *
  *   @source：poj-1155
  *   @author: shuangde
  *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
+<<<<<<< HEAD
+ *===========================================*/
+=======
  *   Copyright (C) 2013/08/18 19:29 All rights reserved. 
  *======================================================*/
+>>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
@@ -61,7 +69,11 @@ int dfs(int u) {
         sum += numLeaf;
         // 做分组背包
         for (int s = sum; s >= 1; --s) {
+<<<<<<< HEAD
+            for (int k = 0; k <= numLeaf && k <= s;  ++k)
+=======
             for (int k = 0; k <= numLeaf;  ++k)
+>>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
                 f[u][s] = max(f[u][s], f[u][s-k] + f[v][k] + w);
         }
     }
