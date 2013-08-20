@@ -1,8 +1,8 @@
 /**=====================================================
  *   This is a solution for ACM/ICPC problem
  *
- *   @source      : hdu-1561
- *   @description :
+ *   @source      : hdu-1561 The more, The Better
+ *   @description : 树形背包dp
  *   @author      : shuangde
  *   @blog        : blog.csdn.net/shuangde800
  *   @email       : zengshuangde@gmail.com
