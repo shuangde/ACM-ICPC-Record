@@ -1,7 +1,8 @@
 /**==========================================
  *   This is a solution for ACM/ICPC problem
  *
- *   @source：hdu-2577
+ *   @source：hdu-2577 How to Type 
+ *   @decription: 简单dp
  *   @author: shuangde
  *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
