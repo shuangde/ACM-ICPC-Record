@@ -7,6 +7,19 @@
  *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
  *===========================================*/
+
+/*
+题意:
+   n个城市节点构成的一棵树，节点i到节点j的电量损耗为 I*I*R*(i到j的路径所含边数)，
+   现在要在某个结点上修建一个供电站，使得这个结点到所有其它节点的总损耗量最小。
+
+思路:
+   典型的树形dp
+   可以先用一次dfs求出每一点的子树结点个数num[u]，以及每一点到它子树所有结点的总距离f[u][0];
+   然后再用一次dfs，推出每个结点到除去它子树部分的结点总距离f[u][1]。
+   f[v][1] = (f[u][0]-f[v][0]-num[v]) + f[u][1] + n - num[v];
+
+ */
 #include<iostream>
 #include<cstdio>
 #include<algorithm>
@@ -63,9 +76,9 @@ int main(){
 
     int nCase;
     scanf("%d", &nCase);
-    
+
     while(nCase--){
-        
+
         scanf("%d%d%d", &n, &I, &R);
 
         for(int i=0; i<=n; ++i) adj[i].clear();
@@ -96,5 +109,5 @@ int main(){
         printf("\n\n");
     }
 
-	return 0;
+    return 0;
 }
