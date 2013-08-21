@@ -1,20 +1,30 @@
-<<<<<<< HEAD
 /**==========================================
-=======
-/**=====================================================
->>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
  *   This is a solution for ACM/ICPC problem
  *
- *   @source：poj-1155
+ *   @source：poj-1155 TELE
  *   @author: shuangde
  *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
-<<<<<<< HEAD
- *===========================================*/
-=======
  *   Copyright (C) 2013/08/18 19:29 All rights reserved. 
  *======================================================*/
->>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
+/*
+题意
+   某收费有线电视网计划转播一场重要的足球比赛。他们的转播网和用户终端构成一棵树状结构，
+   这棵树的根结点位于足球比赛的现场，树叶为各个用户终端，其他中转站为该树的内部节点。
+   从转播站到转播站以及从转播站到所有用户终端的信号传输费用都是已知的，一场转播的总费用等于传输信号的费用总和。
+   现在每个用户都准备了一笔费用想观看这场精彩的足球比赛，有线电视网有权决定给哪些用户提供信号而不给哪些用户提供信号。
+   写一个程序找出一个方案使得有线电视网在不亏本的情况下使观看转播的用户尽可能多。
+
+思路
+   树形背包的入门题。
+   f(i, j)，表示子树i转播给j个用户的最大收益值
+   这题可以看作是树上的分组背包，每个子树看作是一组物品，这一组物品可以取1个，2个...j个
+   然后就是套用分组背包的算法了
+
+   f(i, 1) = w(i), 当点i是叶子节点时
+   f(i, j) = max{ f(i, j-k) + f[v][k] - w(i, v) | v是i的儿子节点， 0<=k<=j}
+
+ */
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
@@ -69,12 +79,9 @@ int dfs(int u) {
         sum += numLeaf;
         // 做分组背包
         for (int s = sum; s >= 1; --s) {
-<<<<<<< HEAD
             for (int k = 0; k <= numLeaf && k <= s;  ++k)
-=======
-            for (int k = 0; k <= numLeaf;  ++k)
->>>>>>> 433c9bfdec989263c6f1089de028f9946fc8b7a7
-                f[u][s] = max(f[u][s], f[u][s-k] + f[v][k] + w);
+                for (int k = 0; k <= numLeaf;  ++k)
+                    f[u][s] = max(f[u][s], f[u][s-k] + f[v][k] + w);
         }
     }
     return sum;
@@ -83,7 +90,7 @@ int dfs(int u) {
 int main(){
 
     while (~scanf("%d%d", &n, &m)) {
-        
+
         initAdj();
         for (int i = 1; i <= n - m; ++i) {
             int x, v, w;
