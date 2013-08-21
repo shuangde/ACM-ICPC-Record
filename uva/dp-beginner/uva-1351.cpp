@@ -10,20 +10,20 @@
 
 /*
 题目大意：
-给一个字符串，可以把连续相同的部分进行缩写成k(S)的形式，S是一个字符串，k表示有连续相同的S
-例如，abgogogogo，可以缩写成ab4(go). 还可以嵌套缩写，比如
-“nowletsgogogoletsgogogo”， 缩写成“now2(lets3(go))”
+   给一个字符串，可以把连续相同的部分进行缩写成k(S)的形式，S是一个字符串，k表示有连续相同的S
+   例如，abgogogogo，可以缩写成ab4(go). 还可以嵌套缩写，比如
+   “nowletsgogogoletsgogogo”， 缩写成“now2(lets3(go))”
 
 思路：
-区间dp
-f(i, j)表示字符串的i~j位的最小位数
-那么
-f(i, j) = min{
-             min{ f(i,k)+f(k+1, j), i<=k<j }, 
-             min{ digitNum(k)+f[l][l+k-1]+2, 如果字符串可以由前k个字符串重复组成的 }
-            }
+   区间dp
+   f(i, j)表示字符串的i~j位的最小位数
+   那么
+   f(i, j) = min{
+   min{ f(i,k)+f(k+1, j), i<=k<j }, 
+   min{ digitNum(k)+f[l][l+k-1]+2, 如果字符串可以由前k个字符串重复组成的 }
+   }
 
-*/
+ */
 #include<iostream>
 #include<cstdio>
 #include<algorithm>
@@ -69,7 +69,7 @@ int main(){
     scanf("%d", &nCase);
 
     while(nCase--){
-        
+
         scanf("%s", str+1);
         len = strlen(str+1);
 
@@ -97,5 +97,5 @@ int main(){
         }
         printf("%d\n", f[1][len]);
     }
-	return 0;
+    return 0;
 }
