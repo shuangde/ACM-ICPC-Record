@@ -28,7 +28,6 @@
    f[i][j][1] = max(f[i][j-1][0], f[i][j-1][1]) + sum{第j列的1～j行的B矿之和};
    最终答案是max{f[n][m][0], f[n][m][1]}
 
-
  */
 #include<iostream>
 #include<cstdio>
