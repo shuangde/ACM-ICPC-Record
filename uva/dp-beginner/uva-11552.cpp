@@ -2,11 +2,31 @@
  *   This is a solution for ACM/ICPC problem
  *
  *   @source: uva-11552 Fewest Flops
- *   @type:  dp
+ *   @type:  多维dp
  *   @author: shuangde
  *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
  *===========================================*/
+
+/*
+题意
+   给一个字符串，把它分为ｋ块，例如字符串“helloworld”分成2块，"hello", "world"
+   每一块里面的字母可以任意的排序。
+   最终字符串， 连续的一样的字母算作一个chunk，问总chunks最少是多少？
+
+
+思路
+   f[i][j]: 第i块的第j位排在最后一位的最少chunks
+
+   对于每个单独的一块，它的chunks就是等于出现的不同字母数
+   第i块的chunks记做 chunks[i]
+
+   如果第i-1块的最后一位和第i块的第一位是一样的，那么可以合并这两个，总chunks可以减少一个
+
+   f[i][j] = min{  如果i-1块的第k位和i块的第一位不同:  f[i-1][k]+chunks[i], 
+   如果i-1块的第k位和i块的第一位相同:  f[i-1][k]+chunks[i]-1  }
+
+ */
 #include<iostream>
 #include<cstdio>
 #include<algorithm>
