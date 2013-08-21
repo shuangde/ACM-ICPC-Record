@@ -32,11 +32,6 @@ vector<Node>products[12];
 int f[2][10010][110];
 int sum[20];
 
-/*
-   f(i, j, k)：前i组用了容量j，选了k个的最大值
-   f(i, j, k) = max{ f(i, j-A[i].t, k-1), f(i-1, j-A[i].t, k-1) } + A[i].val;
- */
-
 int main(){
 
     while (~scanf("%d%d%d", &n, &m, &k)) {
