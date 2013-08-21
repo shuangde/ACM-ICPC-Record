@@ -3,7 +3,8 @@
  *
  *   @source：uva-10271 Chopsticks
  *   @type:  dp
- *   @author: shuangde *   @blog: blog.csdn.net/shuangde800
+ *   @author: shuangde
+ *   @blog: blog.csdn.net/shuangde800
  *   @email: zengshuangde@gmail.com
  *===========================================*/
 #include<iostream>
