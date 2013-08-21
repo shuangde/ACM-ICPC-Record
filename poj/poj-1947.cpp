@@ -33,7 +33,6 @@
     f(i, j) = max{ max{f(i,j-k) + f(v, k) - 1 | 1<=k<s} | v是i的儿子节点 }
 
     最终ans = min{ f(i, p) }
-
 */
 
 #include <iostream>
