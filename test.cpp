@@ -1,5 +1,6 @@
 /**=====================================================
  *   This is a solution for ACM/ICPC problem
+ *  hello world!
  *
  *   @source      : test
  *   @description :
@@ -48,9 +49,9 @@ int main(){
         }
 
         if (buf[i] == '.') buf[i] = 0;
-
-        printf("$%s\n", buf);
     }
+    int64 a=100, b=1111;
+    __gcd(a, b);
 
 	return 0;
 }
