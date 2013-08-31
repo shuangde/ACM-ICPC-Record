@@ -16,7 +16,9 @@
 思路：
    简单的树形dp. 连dp都不能算吧。
    先dfs计算每个节点子树的节点个数tot[i]。
+   再次dfs更新答案：
    f[i] = max( n-tot[i], max{tot[v] | v是i的儿子} );
+   两个dfs可以合并在一个dfs里完成, 复杂度O(n)
 
  */
 #include <iostream>
@@ -54,25 +56,23 @@ using namespace Adj;
 int n;
 
 int dfs(int u, int fa) {
+
     tot[u] = 1;
+    // count
     for (int e = head[u]; e != -1; e = E[e].next) {
         int v = E[e].v;
         if (v == fa) continue;
         tot[u] += dfs(v, u);
     }
-    return tot[u];
-}
-
-void dp(int u, int fa) {
-
+    // 保存答案
     int& ans = f[u] = n - tot[u];
     for (int e = head[u]; e != -1; e = E[e].next) {
         int v = E[e].v;
         if (v == fa) continue;
         ans = max(ans, tot[v]);
-        dp(v, u);
     }
     minx = min(minx, ans);
+    return tot[u];
 }
 
 inline int nextInt(){  
@@ -100,7 +100,6 @@ int main(){
 
         minx = INF;
         dfs(1, -1);
-        dp(1, -1);
 
         bool first = true;
         for (int i = 1; i <= n; ++i) 
