@@ -8,6 +8,17 @@
  *   @email       : zengshuangde@gmail.com
  *   Copyright (C) 2013/08/31 15:32 All rights reserved. 
  *======================================================*/
+
+/*
+题意：
+   一n个节点的棵树，去掉某个节点后，会变成一个森林.
+   这个森林中的每个树都有个节点数量，其中最大节点数设为max
+   问删除某个节点后，max最小可以多少？
+
+思路：
+    和poj-3107 GodFather完全一样！
+
+*/
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
