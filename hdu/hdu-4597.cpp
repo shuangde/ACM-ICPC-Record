@@ -55,15 +55,25 @@ using namespace std;
 int n;
 int a[22], b[22];
 int f[22][22][22][22];
-int sum[22][22][22][22], sum1[22], sum2[22];
+int sum1[22], sum2[22];
 
 
 int dfs(int a1, int a2, int b1, int b2) {
     int& ans = f[a1][a2][b1][b2];
-    int now = sum[a1][a2][b1][b2];
-    if (a1 > a2 && b1==b2 || b1 > b2 && a1 == a2)
-        ans = now;
+
+    int now;
+    if (a1 > a2){
+        now = sum2[b2] - sum2[b1-1]; 
+        if (b1==b2) ans = now;
+    } else if( b1 > b2) {
+        now = sum1[a2] - sum1[a1-1];
+        if (a1==a2) ans = now;
+    } else {
+        now = sum1[a2] - sum1[a1-1] + sum2[b2] - sum2[b1-1]; 
+    }
+
     if (ans != -1) return ans;
+
     ans = 0;
     if (a1 <= a2) {
         ans = max(ans, now - min(dfs(a1+1, a2, b1, b2), dfs(a1, a2-1, b1, b2)));
@@ -88,27 +98,6 @@ int main() {
             scanf("%d", &b[i]);
             sum2[i] = sum2[i-1] + b[i];
         }
-
-
-        // init
-        memset(sum, 0, sizeof(sum));
-
-        for (int i = 0; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                for (int k = j; k <= n; ++k){
-                    int tmp = sum2[k] - sum2[j-1];
-                    sum[i+1][i][j][k] = tmp;
-                    tmp = sum1[k] - sum1[j-1];
-                    sum[j][k][i+1][i] = tmp;
-                }
-            } 
-        }
-
-        for (int i = 1; i <= n; ++i)
-            for (int j = i; j <= n; ++j)
-                for (int k = 1; k <= n; ++k)
-                    for (int l = k; l <= n; ++l)
-                        sum[i][j][k][l] = sum1[j]-sum1[i-1]+sum2[l]-sum2[k-1];
 
         memset(f, -1, sizeof(f));
         cout << dfs(1, n, 1, n) << endl;
