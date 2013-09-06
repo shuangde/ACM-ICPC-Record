@@ -87,20 +87,18 @@ int main(){
             scanf("%d", &len[i]);
         m += 8;
 
-        sort(len+1, len+1+n, greater<int>());
-
         memset(f, INF, sizeof(f));
         for (int i = 0; i <= n; ++i)
             f[i][0] = 0;
 
-        for (int i = 3; i <= n; ++i) {
+        for (int i = n-2; i >= 1; --i) {
             for (int j = m; j >= 1; --j) {
-                f[i][j] = f[i-1][j];
-                if (f[i-2][j-1] != INF && (i-2)-(j-1)*3 >= 1)
-                    f[i][j] = min(f[i][j], f[i-2][j-1] + SQ(len[i]-len[i-1]));
+                f[i][j] = f[i+1][j];
+                if (f[i+2][j-1] != INF && (n-i-1)-(j-1)*3 >= 1)
+                    f[i][j] = min(f[i][j], f[i+2][j-1] + SQ(len[i]-len[i+1]));
             }
         }
-        printf("%d\n", f[n][m]);
+        printf("%d\n", f[1][m]);
     }
     return 0;
 }
