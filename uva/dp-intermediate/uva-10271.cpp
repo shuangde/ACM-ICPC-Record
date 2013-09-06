@@ -1,10 +1,11 @@
 /**=====================================================
  *   This is a solution for ACM/ICPC problem
  *
- *   @source：uva-10271 Chopsticks
- *   @author: shuangde
- *   @blog: blog.csdn.net/shuangde800
- *   @email: zengshuangde@gmail.com
+ *   @source      : uva-10271 Chopsticks
+ *   @description : dp
+ *   @author      : shuangde
+ *   @blog        : blog.csdn.net/shuangde800
+ *   @email       : zengshuangde@gmail.com
  *   Copyright (C) 2013/09/02 23:45 All rights reserved. 
  *======================================================*/
 /*
