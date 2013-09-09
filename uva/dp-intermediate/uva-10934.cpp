@@ -49,10 +49,7 @@ inline void init() {
     for (int i = 1; i < 64; ++i) {
         for (int j = 1; j < 64; ++j) { 
             f[i][j] = f[i][j-1] + f[i-1][j-1] + 1;
-            if (j < 11)
-            printf("%lld ", f[i][j]);
         }
-        puts("");
     }
 }
 int main(){
@@ -63,7 +60,7 @@ int main(){
 
     while (~scanf("%d%lld", &k, &n) && k) {
 
-        if (k > 63) k = 63;
+        k = min(63, k);
         for (int i = 0; i <= 63; ++i) {
             if (f[k][i] >= n) {
                 printf("%d\n", i); 
