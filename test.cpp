@@ -1,57 +1,45 @@
-/**=====================================================
- *   This is a solution for ACM/ICPC problem
- *  hello world!
- *
- *   @source      : test
- *   @description :
- *   @author      : shuangde
- *   @blog        : blog.csdn.net/shuangde800
- *   @email       : zengshuangde@gmail.com
- *   Copyright (C) 2013/08/24 16:03 All rights reserved. 
- *======================================================*/
+/* ***********************************************
+Author        :kuangbin
+Created Time  :2013-9-11 12:08:15
+File Name     :2013-9-11\1012.cpp
+************************************************ */
+
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
-#include <cstdio>
 #include <algorithm>
 #include <vector>
 #include <queue>
-#include <cmath>
-#include <cstring>
-#define MP make_pair
+#include <set>
+#include <map>
+#include <string>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
-
-typedef pair<int, int >PII;
-typedef long long int64;
-const int INF = 0x3f3f3f3f;
-const double PI  = acos(-1.0);
-
-int main(){
-
-    int nCase;
-    scanf("%d", &nCase);
-
-    while (nCase--) {
-        double sum = 0;
-        for (int i = 0; i < 12; ++i) {
-            double x;
-            scanf("%lf", &x);
-            sum += x;
-        }
-
-        sum /= 12.0;
-
-        char buf[100];
-        sprintf(buf, "%.2f", sum+0.0005);
-        int i = strlen(buf) - 1;
-
-        while(buf[i] == '0') {
-            buf[i] = 0;
-            --i;
-        }
-
-        if (buf[i] == '.') buf[i] = 0;
+int a[100010];
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    int T;
+    int n;
+    scanf("%d",&T);
+    int iCase = 0;
+    while(T--)
+    {
+        iCase++;
+        scanf("%d",&n);
+        for(int i = 0;i < n;i++)
+            scanf("%d",&a[i]);
+        int ans = 1;
+        for(int i = 1;i < n;i++)
+            if(a[i] != a[i-1] + 1)
+            {
+                ans = i+1;
+                break;
+            }
+        printf("Case #%d: %d\n",iCase,ans);
     }
-    int64 a=100, b=1111;
-    __gcd(a, b);
-
-	return 0;
+    return 0;
 }
