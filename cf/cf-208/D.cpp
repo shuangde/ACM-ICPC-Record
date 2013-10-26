@@ -22,6 +22,7 @@ const int MAXN = 3010;
 int a[MAXN], b[MAXN], c[MAXN];
 
 int f[MAXN][4];
+int d[MAXN][2];
 
 int main(){
     
@@ -54,6 +55,20 @@ int main(){
                 f[i][3] = max(f[i-1][0], f[i-1][1]) + c[i];
         }
         printf("%d\n", max(f[n][0], f[n][1]));
+    
+        // below is another solution
+/*
+        d[1][0] = b[1];
+        d[1][1] = a[1]; 
+        for (int i = 2; i <= n; ++i) {
+            // 01
+            d[i][0] = max(d[i-1][0]+b[i], d[i-1][1]+c[i]); 
+            // 10
+            d[i][1] = max(d[i-1][0]+a[i], d[i-1][1]+b[i]);
+        }
+       printf("%d\n", d[n][1]);
+*/
+
     }
     return 0;
 }
