@@ -28,7 +28,7 @@ int main() {
 
     while (gets(str + 1)) {
         str[0] = 'A';
-        int p = 1, len = strlen(str); 
+        int p = 1, len = strlen(str+1); 
         vector<PII>ch;
         while (p < len+1) {
             if (str[p] != str[p-1]) {
@@ -39,10 +39,13 @@ int main() {
             ++p;
         }
         int pre = 0;
+        int cnt = 0;
+        string str = "";
         for (int i = 0; i < ch.size(); ++i) {
             int j;
-            for (j = 0; j < ch[i].second && j < 1+(pre!=2); ++j)
+            for (j = 0; j < ch[i].second && j < (1+(pre!=2)); ++j) {
                 putchar(ch[i].first);
+            }
             if (j == 2) pre=2;
             else pre=1;
         }
