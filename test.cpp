@@ -1,79 +1,62 @@
+//shuangde 
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
+#include <cmath>
 #include <cstring>
-#include <cstdlib>
-// 0~x-1
-#define random(x) (rand()%x)
+#define rep(i, n) for (int i = 0; i < n; ++i)
 using namespace std;
 
-const int N = 1e9;
-typedef long long int64;
+const int N = 5010;
+int n;
+int arr[N], tmp[N];
+int ans;
 
+#define MID ((left+right)>>1)
+#define NODE int left,int right,int rt
+#define CALL 1,n,1
+#define LSON left,m,rt<<1
+#define RSON m+1,right,rt<<1|1
 
-int64 a, b, c, d, p, m;
-int64 one, two, three, four; 
+int val[N*4];
 
-int64 gcd(long long a,long long b){
-        while(b^=a^=b^=a%=b);
-            return a;
+void update(NODE, int id) {
+	val[rt]++;
+	if (left == right) return ;
+	int m = MID;
+	if (id <= m) update(LSON, id);
+	else update(RSON, id);
+}
+int query(NODE, int l, int r) {
+	if (left==l && right==r) {
+		return val[rt];
+	}
+	int m = MID;
+	if (r <= m) return query(LSON, l, r);
+	else if (l > m) return query(RSON, l, r);
+	else return query(LSON,l,m)+query(RSON,m+1,r);
 }
 
-int64 countDown(int64 x, int64 y) {
-    int64 tmp = x - m + p;
-    int64 start = tmp%p==0 ? x : x+(p-tmp%p);
-    tmp = y - m + p;
-    int64 end   = tmp%p==0 ? y : y-(tmp%p);
-    if (start > end) return 0;
-    start = start-a-c+1; end = end-a-c+1;
-    return (start+end)*((end-start)/p+1)/2;
+int main() {
+
+	while (~scanf("%d", &n)) {
+
+		ans = 0; memset(val, 0, sizeof(val));
+		for (int i = 0; i < n; ++i) {
+			scanf("%d", &arr[i]); tmp[i] = arr[i];
+			++arr[i];
+			if (arr[i] < n) {
+				ans += query(CALL, arr[i]+1, n);
+			}
+			update(CALL, arr[i]);
+		}
+		int now =  ans;
+		for (int i = 0; i < n-1; ++i) {
+			now = now - tmp[i] + (n-tmp[i]-1);
+			ans = min(ans, now);
+		}
+		printf("%d\n", ans);
+	}
+	return 0;
 }
 
-int64 countUp(int64 x, int64 y) {
-    int64 tmp = x - m + p;
-    int64 start = tmp%p==0 ? x : x+(p-tmp%p);
-    tmp = y - m + p;
-    int64 end   = tmp%p==0 ? y : y-(tmp%p);
-    if (start > end) return 0;
-    start -= b;  end -= b;
-    start = d - start + 1; end = d - end + 1;
-    return (start+end)*((start-end)/p+1)/2;
-} 
-
-int64 countMid(int64 x, int64 y) { 
-    int64 tmp = x - m + p;
-    int64 start = tmp%p==0 ? x : (x+(p-tmp%p));
-    tmp = y - m + p;
-    int64 end   = tmp%p==0 ? y : y-(tmp%p);
-    if (start > end) return 0;
-    return ((end-start)/p+1) * (d-c+1);
-}
-
-int main(){
-
-    cout << "Hello world!" << endl;
-    return 0;
-
-    int T;
-    scanf("%d", &T);
-    for (int cas = 1; cas <= T; ++cas) {
-
-        cin >> a >> b >> c >> d >> p >> m;
-
-        if (b-a < d-c) {
-            swap(a, c); swap(b, d);
-        }
-        one = a+c, two = a+d, three = b+c, four = b+d;
-        int64 res;
-        if (two != three) {
-            res = countDown(one, two) + countMid(two+1, three) + countUp(three+1, four);
-        } else {
-            res = countDown(one, two) + countUp(two+1, four);
-        }
-        int64 tot = (b-a+1)*(d-c+1);
-        int64 div = gcd(res, tot);
-        printf("Case #%d: ", cas);
-        cout << res/div << "/" << tot/div << endl;
-    }
-    return 0;
-}
