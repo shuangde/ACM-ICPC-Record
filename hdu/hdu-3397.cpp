@@ -141,7 +141,6 @@ int query(NODE, int l, int r, int op) {
 		int tmp = min(m-l+1, t[rt<<1].rmx[1]) + min(r-m, t[rt<<1|1].lmx[1]);
 		return max(tmp, ret);
 	}
-	push_up(left, right, rt);
 }
 
 int main () {
