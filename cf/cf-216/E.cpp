@@ -1,65 +1,83 @@
-#include <cstdio>
-#include <vector>
-using namespace std;
-#define N 1000001
-#define F first
-#define S second
-#define mp make_pair
-int bit[N], leftCnt[N], res[N];
-vector<int> query[N], use[N], kill[N];
 
+// E. Valera and Queries
+// 题意： 给n条线段，和m次询问，每次询问有cnt个数:p1,p2..pm(1<=p1<p2<..<pcnt),
+// 输出有多少条线段，至少包含cnt个点中的一个点？
+
+//shuangde
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <cmath>
+#include <cstring>
+#include <string>
+#include <map>
+#include <set>
+#define MP make_pair
+#define SQ ((x)*(x))
+#define CLR(a,b) memset(a, (b), sizeof(a))
+#define cmax(a,b) a=max(a, (b))
+#define cmin(a,b) a=max(a, (b))
+#define rep(i, n) for(int i=0;i<n;++i)
+#define ff(i, n) for(int i=1;i<=n;++i)
+using namespace std;
+
+typedef pair<int, int >PII;
+typedef long long int64;
+const double PI  = acos(-1.0);
+const int INF = 0x3f3f3f3f;
+const double eps = 1e-8;
+
+const int N = 1000010;
 inline int lowbit(int x) {return x&(-x);}
 
-void add(int x, int data){
-	while (x < N){
-		bit[x] += data;
-		x += x&-x;
-	}
+int arr[300010];
+int c[N], leftCnt[N], n, m, maxx;
+vector<int>R[N], p[300010], point[N];
+int64 ans[300010];
+
+void add(int x, int data) {
+    for ( ; x <= maxx; x += lowbit(x)) c[x] += data;
 }
 
-int sum(int x){
-	int ret = 0;
-	while (x > 0){
-		ret += bit[x];
-		x -= lowbit(x);
-	}
-	return ret;
+int sum(int x) {
+    int ret = 0;
+    for ( ; x > 0 ; x -= lowbit(x)) ret += c[x];
+    return ret;
 }
 
 
-int main(){
-	int n, m;
-	scanf("%d%d", &n, &m);
+int main() {
 
-	for (int i = 0; i < n; ++i) {
-		int a, b; scanf("%d%d", &a, &b);
-		leftCnt[a]++; 
-		if (b+1 < N) kill[b+1].push_back(a); // 以b为右端点的左端点
-	}
-
-	for (int i = 0; i < m; ++i) {
-		int k; scanf("%d", &k);
-		query[i].push_back(0);
-		for (int j = 0; j < k; ++j){
-			int a; scanf("%d", &a);
-			query[i].push_back(a);
-			use[a].push_back(i);
-		}
-	}
-
-	for (int i = 1; i < N; ++i) {
-		add(i, leftCnt[i]); // 左端点
-		for (int j = 0; j < kill[i].size(); ++j)
-			add(kill[i][j], -1);
-		for (int j = 0; j < use[i].size(); ++j) {
-			int k = use[i][j];
-			int a = *(--lower_bound(query[k].begin(), query[k].end(), i));
-			res[k] += sum(i) - sum(a);
-		}
-	}
-
-	for (int i = 0; i < m; ++i) 
-		printf("%d\n", res[i]);
-
-	return 0;
+    scanf("%d%d", &n, &m);
+    maxx = -1;
+    rep(i, n) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        ++leftCnt[x];
+        maxx = max(maxx, y);
+        R[y+1].push_back(x);
+    }
+    ++maxx;
+    rep(i, m) {
+        int k; scanf("%d", &k);
+        p[i].push_back(0);
+        rep(j, k) {
+            int x; scanf("%d", &x);	
+            p[i].push_back(x);
+            point[x].push_back(i);
+        }
+    }
+    ff(i, maxx) {
+        add(i, leftCnt[i]);
+        for (int j = 0; j < R[i].size(); ++j) 
+            add(R[i][j], -1);
+        for (int j = 0; j < point[i].size(); ++j) {
+            int a = point[i][j];
+            ans[a] += sum(i) - sum(*(--lower_bound(p[a].begin(), p[a].end(), i)));
+        }
+    }
+    rep(i, m) cout << ans[i] << "\n";
+    return 0;
 }
