@@ -50,8 +50,7 @@ void build(NODE) {
 }
 void update(NODE, int ort, int pos) {
 	rt = tot++;
-	t[rt].ls = t[ort].ls;
-	t[rt].rs = t[ort].rs;
+	t[rt] = t[ort]; 
 	t[rt].val = t[ort].val + 1;
 	if (left == right) return;
 	int m = MID;
