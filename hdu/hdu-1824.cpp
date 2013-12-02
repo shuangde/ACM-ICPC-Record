@@ -28,8 +28,8 @@ const double eps = 1e-8;
 int n, m;
 
 const int VN = 6010;
-vector<int>adj[VN];
 
+vector<int>adj[VN];
 int top, bcnt, idx;
 int sta[VN], DFN[VN], low[VN], belong[VN];
 bool inStack[VN];
@@ -38,7 +38,6 @@ void tarjan(int u) {
     DFN[u] = low[u] = ++idx;
     sta[top++] = u;
     inStack[u] = true;
-
     for (int i = 0; i < adj[u].size(); ++i) {
         int v = adj[u][i];
         if (DFN[v] < 0) {
@@ -66,9 +65,11 @@ void scc() {
     for (int i = 0; i < 2 * n; ++i)
         if (DFN[i] < 0) tarjan(i);
 }
-
 bool check() {
-    scc();
+    // 初始化
+    top = bcnt = idx = 0;
+    memset(DFN, -1, sizeof(DFN));
+    memset(inStack, 0, sizeof(inStack));
     for (int i = 0; i < n; ++i) 
         if (belong[2*i] == belong[2*i+1]) return false;
     return true;

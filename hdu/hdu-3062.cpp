@@ -28,8 +28,6 @@ const double eps = 1e-8;
 
 const int VN = 2010;
 int n, m;
-
-
 namespace Two_Sat {
     vector<int>adj[VN];
 
@@ -41,7 +39,6 @@ namespace Two_Sat {
         DFN[u] = low[u] = ++idx;
         sta[top++] = u;
         inStack[u] = true;
-
         for (int i = 0; i < adj[u].size(); ++i) {
             int v = adj[u][i];
             if (DFN[v] < 0) {
@@ -51,7 +48,6 @@ namespace Two_Sat {
                 low[u] = min(low[u], DFN[v]);
             }
         }
-
         if (DFN[u] == low[u]) {
             ++bcnt;
             int v;
