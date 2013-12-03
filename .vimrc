@@ -4,9 +4,9 @@ set autoindent
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set nobackup 
-"set expandtab
-"set softtabstop=4
+set expandtab
 " 不要生成swap文件，当buffer被丢弃的时候隐藏它 
 setlocal noswapfile
 set mouse=a
@@ -40,23 +40,24 @@ func SetComment()
     call append(line(".")+10, "#include <set>")
     call append(line(".")+11, "#define MP make_pair")
     call append(line(".")+12, "#define SQ ((x)*(x))")
-    call append(line(".")+13, "#define cmax(a,b) a=max(a, (b))")
-    call append(line(".")+14, "#define cmin(a,b) a=max(a, (b))")
-    call append(line(".")+15, "#define rep(i, n) for(int i=0;i<n;++i)")
-    call append(line(".")+16, "#define ff(i, n) for(int i=1;i<=n;++i)")
-    call append(line(".")+17, "using namespace std;")
-    call append(line(".")+18, "")
-    call append(line(".")+19, "typedef pair<int, int >PII;")
-    call append(line(".")+20, "typedef long long int64;")
-    call append(line(".")+21, "const double PI  = acos(-1.0);")
-    call append(line(".")+22, "const int INF = 0x3f3f3f3f;")
-    call append(line(".")+23, "const double eps = 1e-8;")
-    call append(line(".")+24, "")
-    call append(line(".")+25, "int main() {")
-    call append(line(".")+26, "")
+    call append(line(".")+13, "#define CLR(a,b) memset(a, (b), sizeof(a))")
+    call append(line(".")+14, "#define cmax(a,b) a=max(a, (b))")
+    call append(line(".")+15, "#define cmin(a,b) a=min(a, (b))")
+    call append(line(".")+16, "#define rep(i, n) for(int i=0;i<(n);++i)")
+    call append(line(".")+17, "#define ff(i, n) for(int i=1;i<=(n);++i)")
+    call append(line(".")+18, "using namespace std;")
+    call append(line(".")+19, "")
+    call append(line(".")+20, "typedef pair<int, int >PII;")
+    call append(line(".")+21, "typedef long long int64;")
+    call append(line(".")+22, "const double PI  = acos(-1.0);")
+    call append(line(".")+23, "const int INF = 0x3f3f3f3f;")
+    call append(line(".")+24, "const double eps = 1e-8;")
+    call append(line(".")+25, "")
+    call append(line(".")+26, "int main() {")
     call append(line(".")+27, "")
-    call append(line(".")+28, "    return 0;")
-    call append(line(".")+29, "}")
+    call append(line(".")+28, "")
+    call append(line(".")+29, "    return 0;")
+    call append(line(".")+30, "}")
 endfunc
 
 " 定义函数SetTitle，自动插入文件头 
