@@ -93,8 +93,7 @@ int main() {
                     continue;
                 }
                 rep(a, 2) rep(b, 2) if (cal(i,j,a,b) != val) {
-                    addEdge(i*2+!a, j*2+b);
-                    addEdge(j*2+!b, i*2+a);
+                    addEdge(i*2+a, j*2+!b); addEdge(j*2+b, i*2+!a);
                 }
             }
             if (!check(n)) {flag=false; break;}
