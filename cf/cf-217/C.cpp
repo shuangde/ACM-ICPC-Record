@@ -34,27 +34,48 @@ const double eps = 1e-8;
 int main() {
 
     int n, m; scanf("%d%d", &n, &m);
-    int cnt[102] = {0};
+    int cnt[110] = {0};
     int c[n];
 
     rep(i, n) {
         scanf("%d", &c[i]); 
+        ++cnt[c[i]];
     }
-    PII ans[n];
-    sort(c, c+n);
+    vector<PII>vt;
+    ff(i, n) {
+        vt.PB(MP(cnt[c[i]], c[i]));
+    }
+
+    // official sollution
     int cc = 0;
+    PII ans[n];
+
+    sort(vt.begin(), vt.end(), greater<PII>());
+    int maxx = vt[0].first;
+    PII ans[n];
     rep(i, n) {
-        ans[i].first=c[i], ans[i].second=c[n-1-i];
+        ans[i].first = vt[i].second;
+        ans[i].second = vt[(i+maxx)%n].second;
         if (ans[i].first != ans[i].second) ++cc;
     }
 
-    rep(i, n) if (ans[i].first == ans[i].second) {
-        rep(j, n) if (i!=j && ans[j].second!=ans[i].second && ans[j].first != ans[i].second) {
-            ++cc;
-            swap(ans[j].second, ans[i].second);
-            break;
-        }
+
+    /*   
+    // my sollution 
+    sort(c, c+n);
+    rep(i, n) {
+    ans[i].first=c[i], ans[i].second=c[n-1-i];
+    if (ans[i].first != ans[i].second) ++cc;
     }
+
+    rep(i, n) if (ans[i].first == ans[i].second) {
+    rep(j, n) if (i!=j && ans[j].second!=ans[i].second && ans[j].first != ans[i].second) {
+    ++cc;
+    swap(ans[j].second, ans[i].second);
+    break;
+    }
+    }
+     */
 
     printf("%d\n", cc);
     rep(i, n) printf("%d %d\n", ans[i].first, ans[i].second);
