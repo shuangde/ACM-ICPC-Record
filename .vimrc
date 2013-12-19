@@ -12,21 +12,46 @@ setlocal noswapfile
 set mouse=a
 
 "按F5 编译当前文件
-map <F5> :w<CR> :!clear; g++ % -g <CR>
+"map <F5> :w<CR> :!clear; g++ % -g <CR>
+"按F5 编译当前文件
+"\ g++ -DLOCAL % -g -o %<.o;
+map <F5> :call Compile()<CR>
+func Compile()
+    if &filetype == 'cpp'
+    exec "w"
+    exec "! clear;
+    \ echo 正在编译: ./% ...;
+    \ echo ;
+    \ g++ -DLOCAL % -g;
+    \ echo ;
+    \ echo 编译完成;"
+    endif
+endfunc
+
+
 "按F6 执行
-map <F6> :w<CR> :!clear; g++ % -g && (ulimit -c unlimited; ./a.out < input.txt)<CR>
+"map <F6> :w<CR> :!clear; g++ % -g && (ulimit -c unlimited; ./a.out < input.txt)<CR>
+"\ ./%<.o<input.txt %<.o;"
+map <F6> :call Run()<CR>
+func Run()
+    if &filetype == 'cpp'
+    exec "! clear;
+    \ ./a.out<input.txt %<.o;"
+    endif
+endfunc
+
 "按F7 打开input.txt
 map <F7> :w<CR> :!clear; vim ./input.txt;<CR>
 " 按F9 粘贴模式，保持原来的格式
 set pastetoggle=<F9>
- 
+
 
 " 当新建 .h .c .hpp .cpp 等文件时自动调用SetTitle 函数
 autocmd BufNewFile *.[ch],*.hpp,*.cpp exec ":call SetTitle()" 
 
     " 加入注释 
 func SetComment()
-   " call setline(1,"") 
+    " call setline(1,"") 
     call append(line("."),   "\//shuangde")
     call append(line(".")+1, "#include <iostream>") 
     call append(line(".")+2, "#include <cstdio>") 
@@ -66,7 +91,7 @@ func SetComment()
     call append(line(".")+36, "}")
 endfunc
 
-" 定义函数SetTitle，自动插入文件头 
+    " 定义函数SetTitle，自动插入文件头 
 func SetTitle()
     call SetComment()
 endfunc
