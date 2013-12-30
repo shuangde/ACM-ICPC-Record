@@ -6,7 +6,7 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set nobackup 
-set expandtab
+"set expandtab
 " 不要生成swap文件，当buffer被丢弃的时候隐藏它 
 setlocal noswapfile
 set mouse=a
@@ -22,7 +22,7 @@ func Compile()
     exec "! clear;
     \ echo 正在编译: ./% ...;
     \ echo ;
-    \ g++ -DLOCAL % -g;
+    \ g++ -DLOCAL -Wall -g %;
     \ echo ;
     \ echo 编译完成;"
     endif
@@ -32,7 +32,8 @@ endfunc
 "按F6 执行
 "map <F6> :w<CR> :!clear; g++ % -g && (ulimit -c unlimited; ./a.out < input.txt)<CR>
 "\ ./%<.o<input.txt %<.o;"
-map <F6> :call Compile()<CR> :call Run()<CR>
+"map <F6> :call Compile()<CR> :call Run()<CR>
+map <F6> :call Run()<CR>
 func Run()
     if &filetype == 'cpp'
     exec "! clear;
@@ -47,7 +48,8 @@ set pastetoggle=<F9>
 
 
 " 当新建 .h .c .hpp .cpp 等文件时自动调用SetTitle 函数
-autocmd BufNewFile *.[ch],*.hpp,*.cpp exec ":call SetTitle()" 
+"autocmd BufNewFile *.[ch],*.hpp,*.cpp exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp exec ":call SetTitle()" 
 
     " 加入注释 
 func SetComment()
@@ -86,14 +88,16 @@ func SetComment()
     call append(line(".")+31, "")
     call append(line(".")+32, "const double PI  = acos(-1.0);")
     call append(line(".")+33, "const double eps = 1e-8;")
-    call append(line(".")+34, "const int INF = 0x3f3f3f3f;")
-    call append(line(".")+35, "const LL INF64 = 0x3f3f3f3f3f3f3f3f;")
-    call append(line(".")+36, "")
-    call append(line(".")+37, "int main() {")
+    call append(line(".")+34, "const int dir4[4][2]={1,0,-1,0,0,1,0,-1};")
+    call append(line(".")+35, "const int dir8[8][2]={1,0,-1,0,0,1,0,-1,1,-1,1,1,-1,1,-1,-1};")
+    call append(line(".")+36, "const int INF = 0x3f3f3f3f;")
+    call append(line(".")+37, "const LL INF64 = 0x3f3f3f3f3f3f3f3f;")
     call append(line(".")+38, "")
-    call append(line(".")+39, "")
-    call append(line(".")+40, "    return 0;")
-    call append(line(".")+41, "}")
+    call append(line(".")+39, "int main() {")
+    call append(line(".")+40, "")
+    call append(line(".")+41, "")
+    call append(line(".")+42, "    return 0;")
+    call append(line(".")+43, "}")
 endfunc
 
     " 定义函数SetTitle，自动插入文件头 
