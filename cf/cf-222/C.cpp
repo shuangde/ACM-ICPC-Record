@@ -37,60 +37,43 @@ const int INF = 0x3f3f3f3f;
 const LL INF64 = 0x3f3f3f3f3f3f3f3f;
 
 const int dir4[4][2]={1,0,-1,0,0,1,0,-1};
-const int dir8[8][2]={1,0,-1,0,0,1,0,-1,1,-1,1,1,-1,1,-1,-1};
 int n, m, k;
 char mat[510][510];
+bool choose[510][510];
+int cnt, tot;
 
-inline int id(int i, int j) {return i*m+j;}
-inline bool isout(int i, int j) {return i<0||i>=n||j<0||j>=m;}
-
-int deg[502*502];
-bool vis[502*502];
+void dfs(int x, int y) {
+	if (cnt == tot-k) return;
+	++cnt; choose[x][y] = true;
+	rep(i, 4) {
+		int dx = x + dir4[i][0];	
+		int dy = y + dir4[i][1];
+		if (dx>=0 && dx<n && dy>=0 && dy<m && mat[dx][dy]=='.' && !choose[dx][dy]) {
+			dfs(dx, dy);
+		}
+	}
+}
 
 int main() {
 
 	scanf("%d%d%d", &n, &m, &k);
 	rep(i, n) scanf("%s", mat[i]);
-	priority_queue<PII, vector<PII>, greater<PII> >Q;
+	int x, y;
 	rep(i, n) {
 		rep(j, m) if (mat[i][j] == '.'){
-			int cc = 0;
-			for (int k = 0; k < 4; ++k) {
-				int dx = i + dir[k][0];	
-				int dy = j + dir[k][1];
-				if (!isout(dx,dy) && mat[dx][dy]=='.') {
-					++cc;
-				}
-			}
-			deg[id(i,j)] = cc;
-			Q.push(MP(deg[id(i,j)], id(i,j)));
+			x = i, y = j;
+			++tot;
 		}
 	}
 
-	vector<int>ans;
-	while (ans.size() < k) {
-		PII x = Q.top(); Q.pop();
-		int u = x.second;
-		if (vis[u]) continue;
-		vis[u] = true;
-		ans.PB(u);
-		int i = u/m, j=u%m;
-		for (int k = 0; k < 4; ++k) {
-			int dx = i + dir[k][0];	
-			int dy = j + dir[k][1];
-			int v = dx * m + dy;
-			if (!isout(dx,dy) && mat[dx][dy]=='.' && !vis[v]) {
-				--deg[v];
-				Q.push(MP(deg[v], v));
-			}
-		}
-	} 
+	cnt = 0;
+	dfs(x, y);
 
-	for (int i = 0; i < ans.size(); ++i) {
-		int p = ans[i];	
-		mat[p/m][p%m] = 'X';
+	rep(i, n) {
+		rep(j, m) 
+			putchar(choose[i][j]||mat[i][j]=='#'?mat[i][j]:'X');
+		putchar('\n');
 	}
-	rep(i, n) puts(mat[i]);
 	return 0;
 }
 
