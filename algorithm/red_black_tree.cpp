@@ -3,6 +3,7 @@
 	Red-Black Tree
 	Author: shuangde 
 	mail: zengshuangde@gmail.com
+	参考：算法导论
 	2014.1.4
 */
 
