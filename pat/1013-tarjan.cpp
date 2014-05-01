@@ -1,5 +1,3 @@
-
-// 可以用tarjan求割点，效率更高
 //shuangde
 #include <iostream>
 #include <cstdio>
@@ -30,61 +28,53 @@ const LL INF64 = 0x3f3f3f3f3f3f3f3f;
 
 const int N = 1010;
 vector<int>adj[N];
-bool vis[N];
-int n, m, k; 
-int f[N];
 
-int find(int u) {return u==f[u]?u:f[u]=find(f[u]);}
+int dfn[N], low[N], cut[N], idx;
 
-void dfs(int u) {
-	vis[u] = true;
+void dfs(int u, int fa) {
+	dfn[u] = low[u] = idx++;
+	int son = 0;
 	for (int i = 0; i < adj[u].size(); ++i) {
 		int v = adj[u][i];
-		if (!vis[v]) {
-			dfs(v);
-		}
+		if (dfn[v] == -1) {
+			++son;
+			dfs(v, u);
+			low[u] = min(low[u], low[v]);
+			if (fa<0&&son>1 || fa>0&&dfn[u]<=low[v]) 
+				++cut[u];
+		} else if (v != fa)
+			low[u] = min(low[u], dfn[v]);
 	}
-}
-
-int solve(int u) {
-	memset(vis, 0, sizeof(vis));
-	int cnt = 0;
-	vis[u] = 1;
-	for (int i = 0; i < adj[u].size(); ++i) {
-		int v = adj[u][i];
-		if (!vis[v]) {
-			dfs(v);	
-			++cnt;
-		}
-	}
-	return cnt - 1;
 }
 
 int main() {
 
+	int n, m, k;
 	scanf("%d%d%d", &n, &m, &k);
-	for (int i = 0; i <= n; ++i) f[i] = i;
 
 	for (int i = 0; i < m; ++i) {
 		int u, v;
 		scanf("%d%d", &u, &v);
 		adj[u].PB(v);
 		adj[v].PB(u);
-		f[find(u)] = find(v);
 	}
 	int conn = 0;
-	set<int>ss;
-	for (int i = 1; i <= n; ++i) {
-		int x = find(i);
-		if (ss.find(x) == ss.end()) {
+	idx = 0;
+	memset(dfn, -1, sizeof(dfn));
+	for (int i = 0; i <= n; ++i) cut[i] = 1;
+
+	for (int i = 1; i <= n; ++i) 
+		if (dfn[i] == -1) {
+			idx = 0;
+			dfs(i, -1);
 			++conn;
-			ss.insert(x);
 		}
-	}
+
 	for (int i = 0; i < k; ++i) {
 		int u;
 		scanf("%d", &u);
-		cout << solve(u) + (conn?conn-1:0) <<endl;
+		printf("%d\n", adj[u].size()?cut[u]-1:0+(conn?conn-1-!adj[u].size():0));
 	}
-    return 0;
+	return 0;
 }
+
