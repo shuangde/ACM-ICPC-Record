@@ -18,16 +18,11 @@ struct Record {
 int getSec(char *str) {
 	int h, m, s;
 	sscanf(str,"%d:%d:%d",&h,&m,&s);
-//	printf("%02d:%02d:%02d\n", h, m, s);
 	return h*60*60 + m*60 + s;
 }
 
-void print(int x) {
-	x += 8*60*60;
-	printf("%02d:%02d:%02d ", x/3600, (x/60)%60, x%60);
-}
-
 int main () {
+
 	int n, k;
 	scanf("%d%d", &n, &k);
 	char t[15];
@@ -36,43 +31,30 @@ int main () {
 		arr[i].proc *= 60;
 		arr[i].t = getSec(t) - 60*60*8;
 	}
- 
+
 	sort(arr, arr+n);
-	//for (int i = 0; i < n; ++i) printf("%d %d\n", arr[i].t, arr[i].proc);
- 
+
 	priority_queue<int,vector<int>,greater<int> >Q;
 
-	int now = 0, tot = 0, cnt = 0;
-	for (int i = 0; i < n && arr[i].t <= (17-8)*60*60;  ) {
-		if (arr[i].proc > 3600){ ++i; continue; }
-		if (now < arr[i].t) { 
-			if (!Q.empty()) { 
-				int tmp = Q.top();
-				Q.pop();
-				if (tmp > now) now = tmp;
-			} else {
-				now = arr[i].t;
-				Q.push(now + arr[i].proc);
-				//print(now); print(now+arr[i].proc); puts("");
-				++cnt;
-				++i;
-			}
-		} else { 
-			if (Q.size() < k) {
-				Q.push(now+arr[i].proc);
-				tot += now - arr[i].t;
-				print(now); print(now+arr[i].proc); puts("");
-				++cnt;
-				++i;
-			} else {
-				int tmp = Q.top();
-				Q.pop();
-				if (tmp > now) now = tmp;
-			}
+	int tot = 0, cnt = 0;
+	const int deadLine = (17-8)*60*60;
+
+	for (int i = 0; i < n && arr[i].t <= deadLine; ++i) {
+		if (i < k) {
+			Q.push(max(0, arr[i].t) + arr[i].proc);	
+			if (arr[i].t < 0) tot += -arr[i].t;
+			++cnt;
+		} else {
+			int tmp = Q.top(); Q.pop();
+			Q.push(max(tmp, arr[i].t) + arr[i].proc);
+			tot += (arr[i].t >= tmp) ? 0 : (tmp - arr[i].t);
+			++cnt;
 		}
 	}
 
-	printf("%.1f\n", tot / 60.0 / cnt );
-	
+	if (tot) printf("%.1f\n", tot / 60.0 / cnt );
+	else puts("0.0");
+
 	return 0;
 }
+

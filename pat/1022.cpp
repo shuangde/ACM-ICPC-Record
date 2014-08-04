@@ -67,5 +67,5 @@ int main() {
 			cout << *it << endl;
 		}
 	}
-    return 0;
+	return 0;
 }

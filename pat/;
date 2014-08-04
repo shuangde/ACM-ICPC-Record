@@ -1,0 +1,51 @@
+
+//shuangde
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <cstring>
+#include <string>
+#include <map>
+#define MP make_pair
+#define PB push_back
+#define SQ(x) ((x)*(x))
+#define clr(a,b) memset(a, (b), sizeof(a))
+#define cmax(a,b) a=max(a, (b))
+#define cmin(a,b) a=min(a, (b))
+#define rep(i, n) for(int i=0;i<(n);++i)
+using namespace std;
+
+typedef pair<int, int >PII;
+typedef long long LL;
+
+const double PI  = acos(-1.0);
+const double eps = 1e-8;
+const int dir4[4][2]={1,0,-1,0,0,1,0,-1};
+const int dir8[8][2]={1,0,-1,0,0,1,0,-1,1,-1,1,1,-1,1,-1,-1};
+const int INF = 0x3f3f3f3f;
+const LL INF64 = 0x3f3f3f3f3f3f3f3f;
+
+map<string,int>mp;
+int w[1010][1010];
+int n, k;
+
+int main() {
+
+	scanf("%d%d", &n, &k);
+	int idx = 0;
+	for (int i = 0; i < n; ++i) {
+		char str1[5], str2[5];
+		int t;
+		scanf("%s%s%d", str1, str2, &t);
+		if (mp.find(str1) == mp.end()) 
+			mp[str1] = idx++;
+		if (mp.find(str2) == mp.end())
+			mp[str2] = idx++;
+		w[mp[str1]][mp[str2]] += t;
+		w[mp[str2]][mp[str1]] += t;
+	}
+
+    return 0;
+}
