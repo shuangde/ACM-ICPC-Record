@@ -55,9 +55,7 @@ int main () {
             arr[i].rank = rank;
         else
             arr[i].rank = (rank = i);
-    }
 
-    for (int i = 0; i < n; ++i) {
         int id = arr[i].id;
         for (int j = 0; j < k; ++j) {
             int sch = pref[id][j];
